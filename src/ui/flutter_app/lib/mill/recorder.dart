@@ -26,6 +26,7 @@ class GameRecorder {
   int cur = -1;
   String? lastPositionWithRemove = "";
   var _history = <Move>[];
+  final tag = "[GameRecorder]";
 
   GameRecorder({this.cur = -1, this.lastPositionWithRemove});
 
@@ -35,6 +36,50 @@ class GameRecorder {
 
   void setHistory(List<Move> newHistory) {
     _history = newHistory;
+  }
+
+  String parseNotation(String ntt) {
+    String move = "";
+
+    if (ntt.length == 3 && ntt[0] == "x") {
+      if (notationToMove[ntt.substring(1, 3)] != null) {
+        move = '-' + notationToMove[ntt.substring(1, 3)]!;
+      }
+    } else if (ntt.length == 2) {
+      if (notationToMove[ntt] != null) {
+        move = notationToMove[ntt]!;
+      }
+    } else if (ntt.length == 5 && ntt[2] == '-') {
+      if (notationToMove[(ntt.substring(0, 2))] != null &&
+          notationToMove[(ntt.substring(3, 5))] != null) {
+        move = notationToMove[(ntt.substring(0, 2))]! +
+            '->' +
+            notationToMove[(ntt.substring(3, 5))]!;
+      }
+    } else {
+      print("$tag Parse notation $ntt failed.");
+    }
+
+    return move;
+  }
+
+  void import(String moveList) {
+    List<Move> newHistory = [];
+    List<String> list = moveList.split(' ');
+
+    for (var i in list) {
+      i = i.trim();
+      if (i.length > 0 && !i.endsWith(".")) {
+        String m = parseNotation(i);
+        if (m != "") {
+          newHistory.add(Move(m));
+        }
+      }
+    }
+
+    if (newHistory.length > 0) {
+      setHistory(newHistory);
+    }
   }
 
   void jumpToHead() {
