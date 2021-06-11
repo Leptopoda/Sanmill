@@ -406,16 +406,30 @@ void move_priority_list_shuffle()
         MoveList<LEGAL>::movePriorityList[k++] = movePriorityList0[i];
     }
 
-    for (size_t i = 0; i < 8; i++) {
-        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList1[i];
-    }
+    if (gameOptions.getDrawOnHumanExperience() && !rule.hasDiagonalLines) {
+        for (size_t i = 0; i < 8; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList3[i];
+        }
 
-    for (size_t i = 0; i < 4; i++) {
-        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList2[i];
-    }
+        for (size_t i = 0; i < 4; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList2[i];
+        }
 
-    for (size_t i = 0; i < 8; i++) {
-        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList3[i];
+        for (size_t i = 0; i < 8; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList1[i];
+        }
+    } else {
+        for (size_t i = 0; i < 8; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList1[i];
+        }
+
+        for (size_t i = 0; i < 4; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList2[i];
+        }
+
+        for (size_t i = 0; i < 8; i++) {
+            MoveList<LEGAL>::movePriorityList[k++] = movePriorityList3[i];
+        }
     }
 #if 0
     if (!rule.hasDiagonalLines && gameOptions.getShufflingEnabled()) {
