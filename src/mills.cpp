@@ -400,20 +400,22 @@ void move_priority_list_shuffle()
         std::shuffle(movePriorityList3.begin(), movePriorityList3.end(), std::default_random_engine(seed));
     }
 
+    int k = 0;
+
     for (size_t i = 0; i < 4; i++) {
-        MoveList<LEGAL>::movePriorityList[i + 0] = movePriorityList0[i];
+        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList0[i];
     }
 
     for (size_t i = 0; i < 8; i++) {
-        MoveList<LEGAL>::movePriorityList[i + 4] = movePriorityList1[i];
+        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList1[i];
     }
 
     for (size_t i = 0; i < 4; i++) {
-        MoveList<LEGAL>::movePriorityList[i + 12] = movePriorityList2[i];
+        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList2[i];
     }
 
     for (size_t i = 0; i < 8; i++) {
-        MoveList<LEGAL>::movePriorityList[i + 16] = movePriorityList3[i];
+        MoveList<LEGAL>::movePriorityList[k++] = movePriorityList3[i];
     }
 #if 0
     if (!rule.hasDiagonalLines && gameOptions.getShufflingEnabled()) {
