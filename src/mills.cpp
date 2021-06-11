@@ -433,26 +433,30 @@ Depth get_search_depth(const Position *pos)
     const int pieces = pw + pb;
 
     if (!gameOptions.getDeveloperMode()) {
-        if (pos->phase == Phase::placing) {
-            const Depth placingDepthTable[] = {
-                  +1, 1, +1,  1,     /* 0 ~ 3 */
-                  +3, 0  +0,  0,     /* 4 ~ 7 */
-                  +0, 0  +0,  0,     /* 8 ~ 11 */
-                  +0, 0  +0,  0,     /* 12 ~ 15 */
-                  +0, 0  +0,  0,     /* 16 ~ 19 */
-                  +0, 0  +0,  0,     /* 20 ~ 23 */
-                  +0                 /* 24 */
-            };
+        if (gameOptions.getDrawOnHumanExperience()) {
+            if (pos->phase == Phase::placing) {
+                const Depth placingDepthTable[] = {
+                    +1, 1, +1,  1,     /* 0 ~ 3 */
+                    +3, 0  +0,  0,     /* 4 ~ 7 */
+                    +0, 0  +0,  0,     /* 8 ~ 11 */
+                    +0, 0  +0,  0,     /* 12 ~ 15 */
+                    +0, 0  +0,  0,     /* 16 ~ 19 */
+                    +0, 0  +0,  0,     /* 20 ~ 23 */
+                    +0                 /* 24 */
+                };
 
-            const int index = rule.piecesCount * 2 - pos->count<IN_HAND>(WHITE) - pos->count<IN_HAND>(BLACK);
+                const int index = rule.piecesCount * 2 - pos->count<IN_HAND>(WHITE) - pos->count<IN_HAND>(BLACK);
 
-            d = placingDepthTable[index];
-            if (d == 0) {
-                return (Depth)gameOptions.getSkillLevel();
-            } else {
-                return d;
+                d = placingDepthTable[index];
+                if (d == 0) {
+                    return (Depth)gameOptions.getSkillLevel();
+                } else {
+                    return d;
+                }
             }
-        }        
+        } else {
+            return (Depth)gameOptions.getSkillLevel();
+        }
     }
 
 
