@@ -66,9 +66,95 @@ class GameRecorder {
     return move;
   }
 
-  String import(String wmdMoveList) {
+  String playOkNotationToMoveString(String playOk) {
+    String move = "";
+
+    if (playOk.length == 0) {
+      return "";
+    }
+
+    var iDash = playOk.indexOf('-');
+    var iX = playOk.indexOf('x');
+
+    if (iDash == -1 && iX == -1) {
+      // 12
+      var val = int.parse(playOk);
+      if (val >= 1 && val <= 24) {
+        move = playOkNotationToMove[playOk]!;
+        return move;
+      } else {
+        print("$tag Parse PlayOK notation $playOk failed.");
+        return "";
+      }
+    }
+
+    if (iX == 0) {
+      // x12
+      var sub = playOk.substring(1);
+      var val = int.parse(sub);
+      if (val >= 1 && val <= 24) {
+        move = "-" + playOkNotationToMove[sub]!;
+        return move;
+      } else {
+        print("$tag Parse PlayOK notation $playOk failed.");
+        return "";
+      }
+    }
+    if (iDash != -1 && iX == -1) {
+      // 12-13
+      var sub1 = playOk.substring(0, iDash);
+      var val1 = int.parse(sub1);
+      if (val1 >= 1 && val1 <= 24) {
+        move = playOkNotationToMove[sub1]!;
+      } else {
+        print("$tag Parse PlayOK notation $playOk failed.");
+        return "";
+      }
+
+      var sub2 = playOk.substring(iDash + 1);
+      var val2 = int.parse(sub2);
+      if (val2 >= 1 && val2 <= 24) {
+        move = move + "->" + playOkNotationToMove[sub2]!;
+        return move;
+      } else {
+        print("$tag Parse PlayOK notation $playOk failed.");
+        return "";
+      }
+    }
+
+    print("$tag Not support parsing format oo-ooxo PlayOK notation.");
+    return "";
+  }
+
+  bool isPlayOkMoveList(String text) {
+    if (text.length >= 4 &&
+        text.substring(0, 3) == "1. " &&
+        int.tryParse(text.substring(3, 4)) != null) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool isPlayOkNotation(String text) {
+    if (int.tryParse(text.substring(3, 4)) != null) {
+      return true;
+    }
+
+    return false;
+  }
+
+  String playOkToWmdMoveList(String playOk) {
+    return "";
+  }
+
+  String import(String moveList) {
+    if (isPlayOkMoveList(moveList)) {
+      return importPlayOk(moveList);
+    }
+
     List<Move> newHistory = [];
-    List<String> list = wmdMoveList
+    List<String> list = moveList
         .toLowerCase()
         .replaceAll('\n', ' ')
         .replaceAll(',', ' ')
@@ -139,6 +225,55 @@ class GameRecorder {
           String m = wmdNotationToMoveString(i);
           if (m != "") {
             newHistory.add(Move(m));
+          } else {
+            print("Cannot import $i");
+            return i;
+          }
+        }
+      }
+    }
+
+    if (newHistory.length > 0) {
+      setHistory(newHistory);
+    }
+
+    return "";
+  }
+
+  String importPlayOk(String moveList) {
+    List<Move> newHistory = [];
+
+    List<String> list = moveList
+        .replaceAll('\n', ' ')
+        .replaceAll(' 1/2-1/2', '')
+        .replaceAll(' 1-0', '')
+        .replaceAll(' 0-1', '')
+        .split(' ');
+
+    for (var i in list) {
+      i = i.trim();
+
+      if (i.length > 0 && !i.endsWith(".")) {
+        var iX = i.indexOf('x');
+        if (iX == -1) {
+          String m = playOkNotationToMoveString(i);
+          if (m != "") {
+            newHistory.add(Move(m));
+          } else {
+            print("Cannot import $i");
+            return i;
+          }
+        } else if (iX != -1) {
+          String m1 = playOkNotationToMoveString(i.substring(0, iX));
+          if (m1 != "") {
+            newHistory.add(Move(m1));
+          } else {
+            print("Cannot import $i");
+            return i;
+          }
+          String m2 = playOkNotationToMoveString(i.substring(iX));
+          if (m2 != "") {
+            newHistory.add(Move(m2));
           } else {
             print("Cannot import $i");
             return i;

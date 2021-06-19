@@ -427,4 +427,34 @@ Map<String, String> wmdToPlayOkNotation = {
 Map<String, String> playOkToWmdNotation =
     wmdToPlayOkNotation.map((k, v) => MapEntry(v, k));
 
+Map<String, String> playOkNotationToMove = {
+  "8": "(1,1)",
+  "9": "(1,2)",
+  "13": "(1,3)",
+  "18": "(1,4)",
+  "17": "(1,5)",
+  "16": "(1,6)",
+  "12": "(1,7)",
+  "7": "(1,8)",
+  "5": "(2,1)",
+  "6": "(2,2)",
+  "14": "(2,3)",
+  "21": "(2,4)",
+  "20": "(2,5)",
+  "19": "(2,6)",
+  "11": "(2,7)",
+  "4": "(2,8)",
+  "2": "(3,1)",
+  "3": "(3,2)",
+  "15": "(3,3)",
+  "24": "(3,4)",
+  "23": "(3,5)",
+  "22": "(3,6)",
+  "10": "(3,7)",
+  "1": "(3,8)",
+};
+
+Map<String, String> moveToplayOkNotation =
+    playOkNotationToMove.map((k, v) => MapEntry(v, k));
+
 enum GameResult { pending, win, lose, draw, none }
