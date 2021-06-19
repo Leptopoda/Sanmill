@@ -38,7 +38,7 @@ class GameRecorder {
     _history = newHistory;
   }
 
-  String parseWmdNotation(String wmd) {
+  String wmdNotationToMoveString(String wmd) {
     String move = "";
 
     if (wmd.length == 3 && wmd[0] == "x") {
@@ -66,9 +66,9 @@ class GameRecorder {
     return move;
   }
 
-  String import(String moveList) {
+  String import(String wmdMoveList) {
     List<Move> newHistory = [];
-    List<String> list = moveList
+    List<String> list = wmdMoveList
         .toLowerCase()
         .replaceAll('\n', ' ')
         .replaceAll(',', ' ')
@@ -104,14 +104,14 @@ class GameRecorder {
       if (i.length > 0 && !i.endsWith(".")) {
         if (i.length == 5 && i[2] == 'x') {
           // "a1xc3"
-          String m1 = parseWmdNotation(i.substring(0, 2));
+          String m1 = wmdNotationToMoveString(i.substring(0, 2));
           if (m1 != "") {
             newHistory.add(Move(m1));
           } else {
             print("Cannot import $i");
             return i;
           }
-          String m2 = parseWmdNotation(i.substring(2));
+          String m2 = wmdNotationToMoveString(i.substring(2));
           if (m2 != "") {
             newHistory.add(Move(m2));
           } else {
@@ -120,14 +120,14 @@ class GameRecorder {
           }
         } else if (i.length == 8 && i[2] == '-' && i[5] == 'x') {
           // "a1-b2xc3"
-          String m1 = parseWmdNotation(i.substring(0, 5));
+          String m1 = wmdNotationToMoveString(i.substring(0, 5));
           if (m1 != "") {
             newHistory.add(Move(m1));
           } else {
             print("Cannot import $i");
             return i;
           }
-          String m2 = parseWmdNotation(i.substring(5));
+          String m2 = wmdNotationToMoveString(i.substring(5));
           if (m2 != "") {
             newHistory.add(Move(m2));
           } else {
@@ -136,7 +136,7 @@ class GameRecorder {
           }
         } else {
           // no x
-          String m = parseWmdNotation(i);
+          String m = wmdNotationToMoveString(i);
           if (m != "") {
             newHistory.add(Move(m));
           } else {
