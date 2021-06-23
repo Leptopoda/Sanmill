@@ -339,6 +339,13 @@ class _PersonalizationSettingsPageState
         children: <Widget>[
           SettingsSwitchListTile(
             context: context,
+            value: Config.language,
+            onChanged: setLanguage,
+            titleString: S.of(context).language,
+          ),
+          ListItemDivider(),
+          SettingsSwitchListTile(
+            context: context,
             value: Config.isPieceCountInHandShown,
             onChanged: setIsPieceCountInHandShown,
             titleString: S.of(context).isPieceCountInHandShown,
@@ -453,6 +460,68 @@ class _PersonalizationSettingsPageState
   }
 
   // Display
+
+  setLanguage(var value) async {
+    callback(var lang) async {
+      print("[config] language = $lang");
+
+      Navigator.of(context).pop();
+
+      setState(() {
+        Config.language = lang ?? "default";
+
+        if (value != "default") {
+          // TODO
+          S.load(Locale(value));
+        }
+      });
+
+      print("[config] Config.language: ${Config.language}");
+
+      Config.save();
+    }
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          RadioListTile(
+            activeColor: AppTheme.switchListTileActiveColor,
+            title: Text('English'),
+            groupValue: Config.language,
+            value: "en-US",
+            onChanged: callback,
+          ),
+          ListItemDivider(),
+          RadioListTile(
+            activeColor: AppTheme.switchListTileActiveColor,
+            title: Text('Deutsch'),
+            groupValue: Config.language,
+            value: "de-DE",
+            onChanged: callback,
+          ),
+          ListItemDivider(),
+          RadioListTile(
+            activeColor: AppTheme.switchListTileActiveColor,
+            title: Text('简体中文'),
+            groupValue: Config.language,
+            value: "zh-CN",
+            onChanged: callback,
+          ),
+          ListItemDivider(),
+          RadioListTile(
+            activeColor: AppTheme.switchListTileActiveColor,
+            title: Text('Română'),
+            groupValue: Config.language,
+            value: "ro-RO",
+            onChanged: callback,
+          ),
+          ListItemDivider(),
+        ],
+      ),
+    );
+  }
 
   setIsPieceCountInHandShown(bool value) async {
     setState(() {

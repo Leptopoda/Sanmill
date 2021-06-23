@@ -943,5 +943,9 @@
   "ossLicenses": "Licențe open source",
   "@ossLicenses": {
     "description": "Open source licenses"
+  },
+  "language": "Limba",
+  "@language": {
+    "description": "Languages"
   }
 }

@@ -943,5 +943,9 @@
   "ossLicenses": "Open Source Lizenzen",
   "@ossLicenses": {
     "description": "مجوزهای منبع آزاد"
+  },
+  "language": "زبان",
+  "@language": {
+    "description": "Languages"
   }
 }

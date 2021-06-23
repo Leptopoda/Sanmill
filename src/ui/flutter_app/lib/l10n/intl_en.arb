@@ -943,5 +943,9 @@
   "ossLicenses": "Open source licenses",
   "@ossLicenses": {
     "description": "Open source licenses"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Languages"
   }
 }
