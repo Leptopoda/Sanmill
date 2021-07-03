@@ -88,7 +88,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       DrawerListItem(
         index: DrawerIndex.aiVsAi,
         title: S.of(context).aiVsAi,
-        icon: Icon(Icons.computer),
+        icon: Icon(Icons.smartphone),
       ),
       DrawerListItem(
         index: DrawerIndex.preferences,

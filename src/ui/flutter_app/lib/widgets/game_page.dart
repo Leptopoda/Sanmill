@@ -1256,19 +1256,23 @@ class _GamePageState extends State<GamePage>
   }
 
   Widget createPageHeader() {
+    //var iconDataAI = Icons.computer; // Icons.smartphone
+    var iconDataAI = Icons.smartphone;
+    var iconDataHuman = Icons.account_circle_outlined; // Icons.person
+
     Map<EngineType, IconData> engineTypeToIconLeft = {
-      EngineType.humanVsAi: Config.aiMovesFirst ? Icons.computer : Icons.person,
-      EngineType.humanVsHuman: Icons.person,
-      EngineType.aiVsAi: Icons.computer,
-      EngineType.humanVsCloud: Icons.person,
-      EngineType.humanVsLAN: Icons.person,
+      EngineType.humanVsAi: Config.aiMovesFirst ? iconDataAI : iconDataHuman,
+      EngineType.humanVsHuman: iconDataHuman,
+      EngineType.aiVsAi: iconDataAI,
+      EngineType.humanVsCloud: iconDataHuman,
+      EngineType.humanVsLAN: iconDataHuman,
       EngineType.testViaLAN: Icons.cast,
     };
 
     Map<EngineType, IconData> engineTypeToIconRight = {
-      EngineType.humanVsAi: Config.aiMovesFirst ? Icons.person : Icons.computer,
-      EngineType.humanVsHuman: Icons.person,
-      EngineType.aiVsAi: Icons.computer,
+      EngineType.humanVsAi: Config.aiMovesFirst ? iconDataHuman : iconDataAI,
+      EngineType.humanVsHuman: iconDataHuman,
+      EngineType.aiVsAi: iconDataAI,
       EngineType.humanVsCloud: Icons.cloud,
       EngineType.humanVsLAN: Icons.cast,
       EngineType.testViaLAN: Icons.cast,
@@ -1433,7 +1437,7 @@ class _GamePageState extends State<GamePage>
         // Replace with a Row for horizontal icon + text
         children: <Widget>[
           Icon(
-            Icons.casino_outlined,
+            Icons.share_outlined, //Icons.casino_outlined,
             color: AppTheme.toolbarIconColor,
           ),
           Text(S.of(context).game,
@@ -1448,7 +1452,7 @@ class _GamePageState extends State<GamePage>
         // Replace with a Row for horizontal icon + text
         children: <Widget>[
           Icon(
-            Icons.room_preferences_outlined,
+            Icons.settings_outlined, //Icons.room_preferences_outlined,
             color: AppTheme.toolbarIconColor,
           ),
           Text(S.of(context).options,
@@ -1478,7 +1482,7 @@ class _GamePageState extends State<GamePage>
         // Replace with a Row for horizontal icon + text
         children: <Widget>[
           Icon(
-            Icons.lightbulb_outline,
+            Icons.report_gmailerrorred_outlined, //Icons.lightbulb_outline,
             color: AppTheme.toolbarIconColor,
           ),
           Text(S.of(context).info,
